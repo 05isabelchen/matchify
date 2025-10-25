@@ -1,0 +1,51 @@
+{
+  "expo": {
+    "name": "Color Match",
+    "slug": "color-match",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#6366f1"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.yourcompany.colormatch",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app needs access to the camera to take photos of clothing items.",
+        "NSPhotoLibraryUsageDescription": "This app needs access to your photo library to select clothing images.",
+        "NSPhotoLibraryAddUsageDescription": "This app needs to save photos to your library."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#6366f1"
+      },
+      "package": "com.yourcompany.colormatch",
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "This app needs access to your photos to select clothing images.",
+          "cameraPermission": "This app needs access to the camera to take photos of clothing items."
+        }
+      ]
+    ]
+  }
+}
