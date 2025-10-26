@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import ColorCard from './ColorCard';
+import ColorCard from '../ColorCard';
 
 const ResultsSection = ({ matchingColors, onNewSearch }) => {
   if (!matchingColors) return null;

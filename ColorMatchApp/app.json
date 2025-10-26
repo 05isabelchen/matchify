@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "Color Match",
+    "slug": "color-match",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.yourcompany.colormatch"
+    },
+    "android": {
+      "package": "com.yourcompany.colormatch",
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "This app needs access to your photos.",
+          "cameraPermission": "This app needs access to the camera."
+        }
+      ]
+    ]
+  }
+}

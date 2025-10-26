@@ -1,8 +1,6 @@
 // Color Extractor Utility
 // Extracts dominant colors from an image
 
-import { manipulateAsync } from 'expo-image-manipulator';
-
 /**
  * Extract dominant colors from an image URI
  * @param {string} imageUri - URI of the image

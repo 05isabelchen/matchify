@@ -15,10 +15,10 @@ import { StatusBar } from 'expo-status-bar';
 import * as ImagePicker from 'expo-image-picker';
 
 // Import components
-import Header from './components/Header';
-import UploadSection from './components/UploadSection';
-import PreviewSection from './components/PreviewSection';
-import ResultsSection from './components/ResultsSection';
+import Header from './ColorMatchApp/components/Header';
+import UploadSection from './ColorMatchApp/components/UploadSection';
+import PreviewSection from './ColorMatchApp/components/PreviewSection';
+import ResultsSection from './ColorMatchApp/components/ResultsSection';
 
 // Import utilities
 import { extractDominantColors } from './utils/colorExtractor';
