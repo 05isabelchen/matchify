@@ -642,3 +642,39 @@ document.head.appendChild(style);
 // Auto-save if logged in
 saveCurrentMatches(true);
 if (getCurrentUser()) savedSection.classList.remove('hidden');
+
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const menuPanel = document.getElementById('menuPanel');
+const menuOverlay = document.getElementById('menuOverlay');
+
+function openMenu() {
+  menuPanel.classList.add('open');
+  menuOverlay.classList.remove('hidden');
+  hamburgerBtn.classList.add('is-open');
+  hamburgerBtn.setAttribute('aria-expanded', 'true');
+  menuPanel.setAttribute('aria-hidden', 'false');
+}
+
+function closeMenu() {
+  menuPanel.classList.remove('open');
+  menuOverlay.classList.add('hidden');
+  hamburgerBtn.classList.remove('is-open');
+  hamburgerBtn.setAttribute('aria-expanded', 'false');
+  menuPanel.setAttribute('aria-hidden', 'true');
+}
+
+hamburgerBtn?.addEventListener('click', () => {
+  const isOpen = menuPanel.classList.contains('open');
+  isOpen ? closeMenu() : openMenu();
+});
+
+menuOverlay?.addEventListener('click', closeMenu);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && menuPanel.classList.contains('open')) closeMenu();
+});
+
+// close when a link is clicked
+menuPanel?.addEventListener('click', (e) => {
+  const a = e.target.closest('a');
+  if (a) closeMenu();
+});

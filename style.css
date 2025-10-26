@@ -20,7 +20,7 @@
     --danger-color: #ef4444;
     --text-primary: #1f2937;
     --text-secondary: #6b7280;
-    --background: #f9fafb;
+    --background: #ffffff;
     --surface: #ffffff;
     --border: #e5e7eb;
     --shadow: rgba(0, 0, 0, 0.1);
@@ -505,7 +505,31 @@ body {
 
 /* ----- Home page additions ----- */
 
-.home-header { position: relative; padding-top: 3.5rem; }
+.home-header { 
+    background:#ffffff;
+    color: #ffb0e3; 
+    position: relative; 
+    padding-top: 3.5rem; 
+    padding-bottom: 4rem; }
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.home-header h1 {
+    font-family: "Allerta Stencil", sans-serif;
+    font-size: 7rem !important;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.caption {
+    font-size: 2.5rem;
+    opacity: 0.9;
+}
+
 .home-nav {
   position: absolute; top: 1rem; right: 1rem;
   display: flex; gap: 0.75rem; flex-wrap: wrap;
@@ -528,16 +552,18 @@ body {
   gap: clamp(1rem, 3vw, 2.5rem);
   align-items: center;
   margin: 2rem 0 1rem;
+  padding-bottom: 4rem; 
+  padding-top: 4rem; 
 }
 .hero-left h2 {
   font-size: clamp(1.6rem, 2.4vw, 2.2rem);
-  margin-bottom: 0.6rem;
+  margin-bottom: 2rem;
   color: var(--text-primary);
 }
-.hero-left p { color: var(--text-secondary); margin-bottom: 1rem; }
+.hero-left p { color: var(--text-secondary); margin-bottom: 3rem; }
 .hero-cta { display: flex; gap: 0.6rem; margin-bottom: 0.8rem; flex-wrap: wrap; }
-.hero-points { margin-top: 0.25rem; color: var(--text-secondary); padding-left: 1rem; }
-.hero-points li { margin: 0.2rem 0; }
+.hero-points { margin-top: 0.25rem; color: var(--text-secondary); padding-left: 0; text-align: left;}
+.hero-points li { margin: 0.2rem 0; list-style-position: inside;}
 
 .hero-right { display: grid; place-items: center; }
 .collage {
@@ -617,4 +643,141 @@ body {
   .hero { grid-template-columns: 1fr; }
   .hero-right { order: -1; }
 }
+
+/* ===== Photo Strip (complete) ===== */
+
+.photo-strip {
+  margin: 1rem 0 2rem;
+  position: relative;
+}
+
+/* Side edge fades like the reference image */
+.photo-strip::before,
+.photo-strip::after {
+  content: "";
+  position: absolute;
+  top: 3.5rem;               /* sits below the title */
+  bottom: 0;
+  width: 90px;
+  pointer-events: none;
+  z-index: 2;
+}
+.photo-strip::before {
+  left: 0;
+}
+.photo-strip::after {
+  right: 0;
+}
+
+/* Horizontal track: single row, bottom-aligned, no wrap */
+.strip-track {
+  display: flex !important;
+  flex-wrap: nowrap !important;     /* prevent wrapping */
+  align-items: flex-end;            /* bottom-align uneven heights */
+  gap: 1rem;
+  overflow-x: clip;
+  padding: 0;
+  margin: 0;
+  scroll-snap-type: none;
+}
+.strip-track::-webkit-scrollbar { display: none; }
+
+/* Cards (each a fixed-width flex item) */
+.strip-card {
+  position: relative;
+  flex: 0 0 clamp(160px, 22vw, 260px);   /* fixed item width for one-row scroll */
+  border-radius: 1.25rem;
+  overflow: hidden;
+  background: var(--surface);
+  scroll-snap-align: center;
+  transform: translateY(var(--offset, 0px));
+  transition: transform 0.35s ease;
+}
+
+/* Create the uneven/staggered look */
+.strip-card:nth-child(1) { --offset: 18px; height: 330px; }
+.strip-card:nth-child(2) { --offset: 0px;  height: 370px; }
+.strip-card:nth-child(3) { --offset: 36px; height: 320px; }
+.strip-card:nth-child(4) { --offset: 10px; height: 360px; }
+.strip-card:nth-child(5) { --offset: 24px; height: 340px; }
+.strip-card:nth-child(6) { --offset: 0px;  height: 380px; }
+
+/* Images */
+.strip-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: translateZ(0);   /* smoother mobile scrolling */
+}
+
+/* Responsive tweaks */
+@media (max-width: 700px) {
+  .strip-card { flex-basis: clamp(140px, 42vw, 220px); }
+  .strip-card:nth-child(1) { height: 270px; }
+  .strip-card:nth-child(2) { height: 300px; }
+  .strip-card:nth-child(3) { height: 250px; }
+  .strip-card:nth-child(4) { height: 290px; }
+  .strip-card:nth-child(5) { height: 260px; }
+  .strip-card:nth-child(6) { height: 310px; }
+}
+
+.hamburger {
+  position: absolute;
+  top: 1rem; left: 1rem;
+  width: 42px; height: 42px;
+  border: none; background: transparent; cursor: pointer;
+  display: grid; place-items: center;
+  z-index: 1100;
+}
+.hamburger span {
+  display: block;
+  width: 24px; height: 2.5px;
+  background: #404040;                 /* header is pink; white lines show well */
+  margin: 3.5px 0;
+  border-radius: 2px;
+  transition: transform .25s ease, opacity .2s ease, width .2s ease;
+}
+/* animate to X when open */
+.hamburger.is-open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.hamburger.is-open span:nth-child(2) { opacity: 0; width: 0; }
+.hamburger.is-open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+/* Panel */
+.menu-panel {
+  position: fixed;
+  top: 0; left: 0;
+  width: min(78vw, 320px);
+  height: 100dvh;
+  background: var(--surface);
+  box-shadow: 2px 0 20px var(--shadow-lg);
+  transform: translateX(-100%);
+  transition: transform .28s ease;
+  z-index: 1099;
+  padding: 1rem 1rem 1.25rem;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.menu-panel.open { transform: translateX(0); }
+
+.menu-list { list-style: none; display: grid; gap: 0.75rem; }
+.menu-link {
+  display: block;
+  padding: 0.9rem 0.75rem;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-decoration: none;
+  border: 2px solid var(--border);
+  background: #fff;
+  transition: transform .15s ease, background .15s ease, border-color .15s ease;
+}
+.menu-link:hover { background: #fafbff; transform: translateX(2px); border-color: var(--primary-color); }
+
+/* Overlay */
+.menu-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 1098;
+}
+.hidden { display: none !important; } /* already in your CSS, keep if present */
 

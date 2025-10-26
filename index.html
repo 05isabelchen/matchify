@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Matchify — Home</title>
+  <title>Matchify | Home</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,39 +12,70 @@
 <body>
   <div class="app-container">
     <!-- Header -->
-    <header class="app-header home-header">
+    <header class="home-header">
       <div class="header-content">
         <h1>Matchify</h1>
-        <p class="tagline">Find Perfect Color Pairings</p>
+        <p class="caption">Find Perfect Color Pairings</p>
+        <div class="auth-controls">
+  <span id="userGreeting" class="auth-greeting hidden"></span>
+  <div class="auth-buttons">
+    <button id="loginOpenBtn" class="btn-primary btn-sm">Log in</button>
+    <button id="signupOpenBtn" class="btn-secondary btn-sm">Sign up</button>
+    <button id="logoutBtn" class="btn-secondary btn-sm hidden">Log out</button>
+  </div>
 
         <!-- Simple top-right nav -->
-        <nav class="home-nav">
-          <a href="index.html" class="nav-link active">Home</a>
-          <a href="upload.html" class="nav-link">Try the Color Tool</a>
-        </nav>
+        <!-- Hamburger Menu (top-left) -->
+<button id="hamburgerBtn" class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="menuPanel">
+  <span></span><span></span><span></span>
+</button>
+
+<!-- Slide-in Menu Panel -->
+<nav id="menuPanel" class="menu-panel" aria-hidden="true">
+  <ul class="menu-list">
+    <li><a href="index.html" class="menu-link">Home</a></li>
+    <li><a href="upload.html" class="menu-link">Color Matching</a></li>
+    <li><a href="index.html#savedSection" class="menu-link">Saved Colors</a></li>
+    <li><a href="home.html#previews" class="menu-link">Vision Board</a></li>
+  </ul>
+</nav>
+
+<!-- Overlay for menu -->
+<div id="menuOverlay" class="menu-overlay hidden" aria-hidden="true"></div>
+
       </div>
     </header>
+
+    <!-- Horizontal Photo Preview Strip -->
+<section class="photo-strip">
+  <div class="strip-track" id="inspoStrip">
+    <figure class="strip-card"><img src="images/pink.jpg" alt=""></figure>
+    <figure class="strip-card"><img src="images/olive.jpg" alt=""></figure>
+    <figure class="strip-card"><img src="images/nike.jpg" alt=""></figure>
+    <figure class="strip-card"><img src="images/green.jpg" alt=""></figure>
+    <figure class="strip-card"><img src="images/red.jpg" alt=""></figure>
+    <figure class="strip-card"><img src="images/sambas.jpg" alt=""></figure>
+    <!-- more cards -->
+  </div>
+</section>
+
+
 
     <!-- Main -->
     <main class="main-content">
       <!-- Hero -->
       <section class="hero">
         <div class="hero-left">
-          <h2>Create Beautiful Vision Boards & Color Stories</h2>
+          <h2>Create Beautiful Matching Outfits</h2>
           <p>
             Matchify helps you take an outfit or photo and instantly discover perfectly
             matched color palettes. Save your favorites, build vision boards, and explore
-            ideas for outfits, mood boards, or brand vibes—without guessing.
+            ideas for outfits, mood boards, or brand vibes without guessing.
           </p>
           <div class="hero-cta">
             <a class="btn-primary" href="upload.html">Start Matching Colors</a>
             <a class="btn-secondary" href="#previews">See Vision Boards</a>
           </div>
-          <ul class="hero-points">
-            <li>Extract dominant colors from your photo</li>
-            <li>Get complementary, analogous, contrast & neutral matches</li>
-            <li>Save palettes into boards you can revisit anytime</li>
-          </ul>
         </div>
         <div class="hero-right">
           <!-- Collage Preview -->
@@ -61,6 +92,14 @@
             </div>
           </div>
         </div>
+      </section>
+
+      <section class = "hero">
+        <ul class="hero-points">
+            <li>Extract dominant colors from your photo</li>
+            <li>Get complementary, analogous, contrast & neutral matches</li>
+            <li>Save palettes into boards you can revisit anytime</li>
+          </ul>
       </section>
 
       <!-- What we do -->
@@ -159,5 +198,6 @@
       <p>© 2025 Matchify</p>
     </footer>
   </div>
+  <script src="script.js"></script>
 </body>
 </html>
