@@ -135,7 +135,33 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    text-decoration: none;
     gap: 1rem;
+}
+
+.btn-visionboard {
+    padding: 0.875rem 2rem;
+    border: none;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    align-items: right;
+    justify-content: center;
+    gap: 1rem;
+    margin-left: auto;
+}
+
+.btn-visionboard {
+    background: var(--primary-dark);
+    color: white;
+}
+
+.btn-visionboard:hover {
+    background: #bf005f;
+    color: white;
 }
 
 .btn-primary {
@@ -552,8 +578,18 @@ body {
   gap: clamp(1rem, 3vw, 2.5rem);
   align-items: center;
   margin: 2rem 0 1rem;
-  padding-bottom: 4rem; 
-  padding-top: 4rem; 
+  padding-bottom: 2.5rem; 
+  padding-top: 2.5rem; 
+}
+
+.hero2 {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  align-items: center;
+  margin: 2rem 0 1rem;
+  padding-bottom: 7rem; 
+  padding-top: 3rem; 
 }
 .hero-left h2 {
   font-size: clamp(1.6rem, 2.4vw, 2.2rem);
@@ -569,18 +605,22 @@ body {
   overflow: hidden;
   padding: 0.75rem;
 }
+
+.hero-right h2 {
+  font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+  margin-bottom: 2rem;
+  color: var(--text-primary);
+}
 .hero-left p { color: var(--text-secondary); margin-bottom: 3rem; }
 .hero-cta { display: flex; gap: 0.6rem; margin-bottom: 0.8rem; flex-wrap: wrap; }
 .hero-points { 
-    grid-column: 2;
-    justify-self: end;
-    align-self: start;
     margin-top: 0.25rem; 
     color: var(--text-secondary); 
     padding-right: 1rem;
     padding-left: 0; 
     text-align: left;
     list-style-position: inside;
+    padding-bottom: 2rem;
 }
 
 .hero-points li { margin: 0.2rem 0; list-style-position: inside;}
@@ -588,11 +628,10 @@ body {
 .hero-right { display: grid; place-items: center; }
 .collage {
   position: relative;
-  width: min(520px, 90%);
+  width: 100%;
   aspect-ratio: 5 / 4;
   border-radius: 1rem;
   background: var(--surface);
-  box-shadow: 0 6px 20px var(--shadow-lg);
   overflow: hidden;
   padding: 0.75rem;
   display: grid;
@@ -601,42 +640,73 @@ body {
     "c b";
   gap: 0.75rem;
 }
-.collage-item { border-radius: 0.8rem; box-shadow: 0 3px 10px var(--shadow); background-size: cover; background-position: center; }
-.collage-a { grid-area: a; background-image: url('https://picsum.photos/seed/colla/400/400'); }
-.collage-b { grid-area: b; background-image: url('https://picsum.photos/seed/collb/600/600'); }
-.collage-c { grid-area: c; background-image: url('https://picsum.photos/seed/collc/400/400'); }
+.collage-item { border-radius: 0.8rem; background-size: cover; background-position: center; }
+.collage-a { grid-area: a; background-image: url('images/newbal.jpg'); }
+.collage-b { grid-area: b; background-image: url('images/redtop.jpg'); }
+.collage-c { grid-area: c; background-image: url('images/deminskirt.jpg'); }
 
 .collage-palette {
   position: absolute; left: 0; right: 0; bottom: 0.5rem;
   display: flex; gap: 6px; justify-content: center;
 }
 .collage-palette span {
-  width: 28px; height: 28px; border-radius: 8px; box-shadow: 0 2px 6px var(--shadow);
+  width: 60px; height: 60px; border-radius: 8px; box-shadow: 0 2px 6px var(--shadow);
   background: var(--sw, #eee);
 }
 
 /* Features row */
 .features {
   display: grid;
+  background: var(--primary-color);
   gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  margin: 2rem 0 1rem;
+  padding-bottom: 5rem;
+  padding-top: 5rem;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
 }
+
+.features-inner {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  max-width: 1200px; /* ✅ keep boxes contained */
+  margin: 0 auto;     /* centers inner grid */
+  padding: 0 1.5rem;  /* optional horizontal breathing room */
+}
+
 .feature {
   background: var(--surface); border-radius: 1rem; padding: 1.25rem;
-  box-shadow: 0 2px 10px var(--shadow);
 }
-.feature-icon { font-size: 1.4rem; margin-bottom: 0.35rem; }
+.feature-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.feature-icon img {
+  width: 100%;        /* ✅ size of the uploaded image */
+  height: 100%;
+  border-radius: 8px;  /* optional: slight rounding */
+}
+
 
 /* Boards */
-.boards-head { text-align: center; margin: 2rem 0 1rem; }
+.boards-head { text-align: center; margin: 2rem 0 1rem; padding-top: 5rem;
+padding-bottom: 2rem;}
 .boards-head h2 { font-size: 1.6rem; margin-bottom: 0.25rem; }
 .boards-head p { color: var(--text-secondary); }
 
 .boards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1rem;
+  padding-bottom: 5rem;
 }
 .board-card {
   background: var(--surface);
@@ -646,13 +716,13 @@ body {
   display: flex; flex-direction: column;
 }
 .board-media { position: relative; }
-.board-media img { width: 100%; height: auto; display: block; }
+.board-media img { width: 100%; height: 300px; display: block; }
 .mini-palette {
   position: absolute; left: 0; right: 0; bottom: 0.6rem;
   display: flex; gap: 6px; justify-content: center;
 }
 .mini-palette span {
-  width: 22px; height: 22px; border-radius: 6px; background: var(--sw, #eee);
+  width: 45px; height: 45px; border-radius: 6px; background: var(--sw, #eee);
   box-shadow: 0 2px 6px var(--shadow);
 }
 .board-body { padding: 1rem; display: grid; gap: 0.5rem; }
