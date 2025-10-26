@@ -23,8 +23,8 @@
     <button id="signupOpenBtn" class="btn-secondary btn-sm">Sign up</button>
     <button id="logoutBtn" class="btn-secondary btn-sm hidden">Log out</button>
   </div>
-
-        <!-- Simple top-right nav -->
+      </div>
+      <!-- Simple top-right nav -->
         <!-- Hamburger Menu (top-left) -->
 <button id="hamburgerBtn" class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="menuPanel">
   <span></span><span></span><span></span>
@@ -43,7 +43,6 @@
 <!-- Overlay for menu -->
 <div id="menuOverlay" class="menu-overlay hidden" aria-hidden="true"></div>
 
-      </div>
     </header>
 
     <!-- Horizontal Photo Preview Strip -->
@@ -74,12 +73,17 @@
           </p>
           <div class="hero-cta">
             <a class="btn-primary" href="upload.html">Start Matching Colors</a>
-            <a class="btn-secondary" href="#previews">See Vision Boards</a>
           </div>
         </div>
         <div class="hero-right">
           <!-- Collage Preview -->
-          <div class="collage">
+          <img src = "images/colorpallete.jpg">
+        </div>
+      </section>
+
+      <section class = "hero">
+        <div class = "hero-left">
+            <div class="collage">
             <div class="collage-item collage-a"></div>
             <div class="collage-item collage-b"></div>
             <div class="collage-item collage-c"></div>
@@ -92,14 +96,16 @@
             </div>
           </div>
         </div>
-      </section>
-
-      <section class = "hero">
         <ul class="hero-points">
             <li>Extract dominant colors from your photo</li>
             <li>Get complementary, analogous, contrast & neutral matches</li>
             <li>Save palettes into boards you can revisit anytime</li>
           </ul>
+          <div class = "hero-right">
+          <div class="hero-cta">
+            <a class="btn-secondary" href="#previews">See Vision Boards</a>
+          </div>
+            </div>
       </section>
 
       <!-- What we do -->
@@ -198,6 +204,25 @@
       <p>© 2025 Matchify</p>
     </footer>
   </div>
-  <script src="script.js"></script>
+  <!-- Auth Modal -->
+<div id="authModal" class="modal hidden">
+  <div class="modal-content">
+    <h2 id="authTitle">Log in</h2>
+    <form id="authForm">
+      <label>Username</label>
+      <input id="authUsername" type="text" required>
+      <label>Password</label>
+      <input id="authPassword" type="password" required>
+      <button type="submit" class="btn-primary">Submit</button>
+      <button type="button" id="authCancelBtn" class="btn-secondary">Cancel</button>
+    </form>
+    <p id="authSwitchText">Don't have an account?</p>
+    <button id="authSwitchBtn" class="btn-link">Sign up</button>
+  </div>
+</div>
+
+<div id="modalOverlay" class="overlay hidden"></div>
+
+<script src="script.js"></script>
 </body>
 </html>
