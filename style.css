@@ -5,9 +5,16 @@
     box-sizing: border-box;
 }
 
+.allerta-stencil-regular {
+    font-family: "Allerta Stencil", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+
 :root {
-    --primary-color: #6366f1;
-    --primary-dark: #4f46e5;
+    --primary-color: #fec0e8;
+    --primary-dark: #f36db0;
     --secondary-color: #8b5cf6;
     --success-color: #10b981;
     --danger-color: #ef4444;
@@ -38,10 +45,9 @@ body {
 
 /* Header */
 .app-header {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    background:#fec0e8;
     color: white;
-    padding: 1.5rem 1rem;
-    box-shadow: 0 4px 6px var(--shadow);
+    padding: 1rem 0.5rem;
 }
 
 .header-content {
@@ -51,7 +57,8 @@ body {
 }
 
 .app-header h1 {
-    font-size: 2rem;
+    font-family: "Allerta Stencil", sans-serif;
+    font-size: 4rem !important;
     font-weight: 700;
     margin-bottom: 0.25rem;
 }
@@ -367,6 +374,19 @@ body {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* Center the Upload Section */
+.upload-section {
+    display: flex;
+    justify-content: center;        /* center horizontally */
+    align-items: center;            /* center vertically */
+    min-height: 60vh;               /* take up most of the screen height */
+}
+
+.upload-area {
+    width: clamp(320px, 80vw, 900px); /* responsive width */
+    margin: 0 auto;
 }
 
 /* Responsive Design */

@@ -15,6 +15,8 @@ export const generateMatchingColors = (baseColor) => {
     complementary: generateComplementary(hsv),
     analogous: generateAnalogous(hsv),
     triadic: generateTriadic(hsv),
+    contrasting: generateContrasting(hsv),
+    monochromatic: generateMonochromatic(hsv),
     neutral: generateNeutral(),
   };
 };
@@ -56,6 +58,29 @@ const generateTriadic = (hsv) => {
     hsvToRgb((hsv.h + 120) % 360, hsv.s * 0.7, hsv.v * 0.9),
   ];
   
+  return colors.map(addColorInfo);
+};
+
+const generateContrasting = (hsv) => {
+  const colors = [
+    hsvToRgb((hsv.h + 150) % 360, hsv.s, hsv.v),
+    hsvToRgb((hsv.h - 150 + 360) % 360, hsv.s, hsv.v),
+    // add a softened complement for variety
+    hsvToRgb((hsv.h + 180) % 360, Math.max(hsv.s * 0.9, 0.25), hsv.v * 0.85),
+  ];
+  return colors.map(addColorInfo);
+};
+
+/**
+ * Generate monochromatic color variations
+ */
+const generateMonochromatic = (hsv) => {
+  const colors = [
+    hsvToRgb(hsv.h, hsv.s * 0.9, Math.min(hsv.v * 1.0, 1)),
+    hsvToRgb(hsv.h, hsv.s * 0.7, hsv.v * 0.85),
+    hsvToRgb(hsv.h, hsv.s * 0.5, hsv.v * 0.7),
+    hsvToRgb(hsv.h, hsv.s * 0.3, hsv.v * 0.55),
+  ];
   return colors.map(addColorInfo);
 };
 

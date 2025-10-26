@@ -48,6 +48,28 @@ const ResultsSection = ({ matchingColors, onNewSearch }) => {
         </View>
       </View>
 
+      {/* Contrasting Colors */}
+<View style={styles.section}>
+  <Text style={styles.sectionTitle}>Contrasting Colors</Text>
+  <Text style={styles.sectionDesc}>High-contrast split-complementary picks</Text>
+  <View style={styles.grid}>
+    {matchingColors.contrasting.map((color, index) => (
+      <ColorCard key={`contrast-${index}`} color={color} />
+    ))}
+  </View>
+</View>
+
+{/* Monochromatic Colors */}
+<View style={styles.section}>
+  <Text style={styles.sectionTitle}>Monochromatic Colors</Text>
+  <Text style={styles.sectionDesc}>Shades and tints of the base color</Text>
+  <View style={styles.grid}>
+    {matchingColors.monochromatic.map((color, index) => (
+      <ColorCard key={`mono-${index}`} color={color} />
+    ))}
+  </View>
+</View>
+
       {/* Neutral Colors */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Neutral Pairings</Text>
