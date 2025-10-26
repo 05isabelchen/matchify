@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Matchify — Vision Board</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .board-container{max-width:1200px;margin:1rem auto;padding:0 1rem}
+    .board-actions{display:flex;gap:.5rem;flex-wrap:wrap;margin:1rem 0}
+    .btn{padding:.625rem 1rem;border:none;border-radius:.75rem;cursor:pointer}
+    .btn-primary{background:var(--secondary-color);color:#fff}
+    .btn-secondary{background:var(--surface);color:var(--secondary-color);border:2px solid var(--secondary-color)}
+    .board{column-count:1;column-gap:1rem}
+    @media(min-width:640px){.board{column-count:2}}
+    @media(min-width:900px){.board{column-count:3}}
+    @media(min-width:1200px){.board{column-count:4}}
+    .pin{display:inline-block;width:100%;background:var(--surface);border:1px solid var(--border);border-radius:0.75rem;margin:0 0 1rem;overflow:hidden;box-shadow:0 2px 8px var(--shadow)}
+    .pin img{width:100%;display:block;background:#eee}
+    .pin .content{padding:.75rem;display:flex;flex-direction:column;gap:.5rem}
+    .pin .meta{display:flex;justify-content:space-between;align-items:center;gap:.5rem}
+    .dot{width:14px;height:14px;border-radius:50%}
+    .hex{font-family:'Courier New',monospace;font-size:.75rem;color:var(--text-secondary)}
+    .icon-btn{border:1px solid var(--border);background:#fff;padding:.4rem .6rem;border-radius:.5rem;cursor:pointer;font-size:.75rem}
+    .icon-btn.danger{border-color:#ef4444;color:#ef4444}
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <div class="header-content">
+        <h1>Matchify</h1>
+        <p class="tagline">Vision Board</p>
+      </div>
+    </header>
+
+    <main class="board-container">
+      <div class="board-actions">
+        <button id="exportBoard" class="btn btn-secondary">Export JSON</button>
+        <label class="btn btn-primary" style="display:inline-flex;align-items:center;gap:.5rem;">
+          Import JSON
+          <input type="file" id="importBoard" accept="application/json" hidden />
+        </label>
+        <button id="clearBoard" class="btn btn-secondary">Clear Board</button>
+        <a href="index.html" class="btn btn-primary" style="text-decoration:none;display:inline-flex;align-items:center;">Back to Matchify</a>
+      </div>
+
+      <section id="board" class="board"></section>
+    </main>
+
+    <footer class="app-footer">
+      <p>© 2025 Matchify</p>
+    </footer>
+  </div>
+
+  <script>
+    const LS_KEY='matchify_board_v1';
+    let pins=[];
+
+    const boardEl=document.getElementById('board');
+    const exportBtn=document.getElementById('exportBoard');
+    const importEl=document.getElementById('importBoard');
+    const clearBtn=document.getElementById('clearBoard');
+
+    function load(){ try{ pins=JSON.parse(localStorage.getItem(LS_KEY))||[] }catch{ pins=[] } }
+    function save(){ localStorage.setItem(LS_KEY, JSON.stringify(pins)) }
+
+    function esc(s){return (s||'').replace(/[&<>"']/g,c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]))}
+
+    function pinEl(pin,idx){
+      const el=document.createElement('article'); el.className='pin';
+      el.innerHTML=`
+        ${pin.image ? `<img src="${esc(pin.image)}" alt="">` : ''}
+        <div class="content">
+          ${pin.note ? `<div class="note">${esc(pin.note)}</div>`:''}
+          <div class="meta">
+            <div style="display:flex;align-items:center;gap:.5rem;">
+              ${pin.hex?`<span class="dot" style="background:${pin.hex}"></span><span class="hex">${pin.hex}</span>`:''}
+            </div>
+            <div style="display:flex;gap:.5rem;">
+              ${pin.image?`<button class="icon-btn" data-copy="${esc(pin.image)}">Copy Image URL</button>`:''}
+              <button class="icon-btn danger" data-del="${idx}">Delete</button>
+            </div>
+          </div>
+        </div>`;
+      return el;
+    }
+
+    function render(){
+      boardEl.innerHTML='';
+      pins.forEach((p,i)=> boardEl.appendChild(pinEl(p,i)));
+    }
+
+    boardEl.addEventListener('click', async (e)=>{
+      const del=e.target.getAttribute('data-del');
+      const copy=e.target.getAttribute('data-copy');
+      if(del!==null){ pins.splice(Number(del),1); save(); render(); }
+      else if(copy){ try{ await navigator.clipboard.writeText(copy); alert('Image URL copied!') }catch{ alert('Copy failed') } }
+    });
+
+    exportBtn.addEventListener('click', ()=>{
+      const blob=new Blob([JSON.stringify(pins,null,2)],{type:'application/json'});
+      const a=document.createElement('a');
+      a.href=URL.createObjectURL(blob); a.download='matchify-vision-board.json'; a.click(); URL.revokeObjectURL(a.href);
+    });
+
+    importEl.addEventListener('change', async (e)=>{
+      const f=e.target.files?.[0]; if(!f) return;
+      try{ const txt=await f.text(); const data=JSON.parse(txt); if(!Array.isArray(data)) throw 0;
+        pins=data.filter(p=>p && (p.hex || p.image)); save(); render(); importEl.value='';
+      }catch{ alert('Invalid JSON file') }
+    });
+
+    clearBtn.addEventListener('click', ()=>{
+      if(!pins.length) return;
+      if(confirm('Clear entire board?')){ pins=[]; save(); render(); }
+    });
+
+    load(); render();
+  </script>
+</body>
+</html>
