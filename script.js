@@ -43,7 +43,6 @@ const colorChips = document.getElementById('colorChips');
 
 // Event Listeners
 uploadBtn.addEventListener('click', () => fileInput.click());
-uploadArea.addEventListener('click', () => fileInput.click());
 fileInput.addEventListener('change', handleFileSelect);
 clearBtn.addEventListener('click', resetApp);
 analyzeBtn.addEventListener('click', analyzeColors);

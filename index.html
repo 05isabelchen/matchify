@@ -1,145 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#6366f1">
-    <meta name="description" content="Upload clothing photos and discover matching colors">
-    <title>Color Match - Fashion Color Finder</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icon-192.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Allerta+Stencil&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Matchify — Home</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Allerta+Stencil&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="app-container">
-        <!-- Header -->
-        <header class="app-header">
-            <div class="header-content">
-                <h1>Matchify</h1>
-                <p class="tagline">Find Perfect Color Pairings</p>
-                <!-- Auth Controls -->
-<div class="auth-controls">
-  <span id="userGreeting" class="auth-greeting hidden"></span>
-  <div class="auth-buttons">
-    <button id="loginOpenBtn" class="btn-secondary btn-sm">Log in</button>
-    <button id="signupOpenBtn" class="btn-primary btn-sm">Sign up</button>
-    <button id="logoutBtn" class="btn-secondary btn-sm hidden">Log out</button>
-  </div>
-</div>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header home-header">
+      <div class="header-content">
+        <h1>Matchify</h1>
+        <p class="tagline">Find Perfect Color Pairings</p>
 
-            </div>
-        </header>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Upload Section -->
-            <section class="upload-section" id="uploadSection">
-                <div class="upload-area" id="uploadArea">
-                    <input type="file" id="fileInput" accept="image/*" capture="environment" hidden>
-                    <div class="upload-placeholder">
-                        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="17 8 12 3 7 8"></polyline>
-                            <line x1="12" y1="3" x2="12" y2="15"></line>
-                        </svg>
-                        <h2>Upload Your Clothing</h2>
-                        <p>Tap to take a photo or choose from gallery</p>
-                        <button class="btn-primary" id="uploadBtn">Choose Photo</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Preview Section -->
-            <section class="preview-section hidden" id="previewSection">
-                <div class="image-preview">
-                    <img id="previewImage" alt="Uploaded clothing item">
-                    <button class="btn-icon btn-close" id="clearBtn" aria-label="Clear image">✕</button>
-                </div>
-                
-                <div class="extracted-colors" id="extractedColors">
-                    <h3>Dominant Colors</h3>
-                    <div class="color-chips" id="colorChips"></div>
-                </div>
-
-                <button class="btn-primary btn-full" id="analyzeBtn">
-                    <span class="btn-text">Find Matching Colors</span>
-                    <span class="loader hidden"></span>
-                </button>
-            </section>
-
-            <!-- Results Section -->
-            <section class="results-section hidden" id="resultsSection">
-                <h2>Matching Colors</h2>
-                <button class="btn-primary btn-full" id="saveMatchesBtn">Save These Matches</button>
-
-                <div class="color-theory-section">
-                    <h3>Complementary Colors</h3>
-                    <p class="theory-description">Colors opposite on the color wheel - creates vibrant contrast</p>
-                    <div class="color-grid" id="complementaryColors"></div>
-                </div>
-
-                <div class="color-theory-section">
-                    <h3>Analogous Colors</h3>
-                    <p class="theory-description">Colors next to each other - creates harmony</p>
-                    <div class="color-grid" id="analogousColors"></div>
-                </div>
-
-                <div class="color-theory-section">
-                   <h3>Contrasting Colors</h3>
-                   <p class="theory-description">High-contrast (split-complementary) picks for bold pairings</p>
-                   <div class="color-grid" id="contrastingColors"></div>
-               </div>
-
-
-                <div class="color-theory-section">
-                    <h3>Neutral Pairings</h3>
-                    <p class="theory-description">Classic neutrals that work with everything</p>
-                    <div class="color-grid" id="neutralColors"></div>
-                </div>
-
-                <button class="btn-secondary btn-full" id="newSearchBtn">Upload Another Item</button>
-            <section class="results-section hidden" id="savedSection">
-  <h2>Saved Palettes</h2>
-  <div id="savedGrid" class="saved-grid"></div>
-</section>
-
-            </section>
-        </main>
-
-        <!-- Footer -->
-        <footer class="app-footer">
-            <p>Matchify</p>
-        </footer>
-    </div>
-    <!-- Auth Modal -->
-<div id="authModal" class="modal hidden">
-  <div class="modal-content">
-    <h3 id="authTitle">Log in</h3>
-    <form id="authForm">
-      <label class="modal-label">
-        Username
-        <input id="authUsername" type="text" class="modal-input" autocomplete="username" required>
-      </label>
-      <label class="modal-label">
-        Password
-        <input id="authPassword" type="password" class="modal-input" autocomplete="current-password" required>
-      </label>
-      <div class="modal-actions">
-        <button type="submit" class="btn-primary">Continue</button>
-        <button type="button" id="authCancelBtn" class="btn-secondary">Cancel</button>
+        <!-- Simple top-right nav -->
+        <nav class="home-nav">
+          <a href="index.html" class="nav-link active">Home</a>
+          <a href="upload.html" class="nav-link">Try the Color Tool</a>
+        </nav>
       </div>
-      <p class="modal-switch">
-        <span id="authSwitchText">Don't have an account?</span>
-        <button type="button" id="authSwitchBtn" class="linklike">Sign up</button>
-      </p>
-    </form>
-  </div>
-</div>
-<div id="modalOverlay" class="modal-overlay hidden"></div>
+    </header>
 
-    <script src="script.js"></script>
+    <!-- Main -->
+    <main class="main-content">
+      <!-- Hero -->
+      <section class="hero">
+        <div class="hero-left">
+          <h2>Create Beautiful Vision Boards & Color Stories</h2>
+          <p>
+            Matchify helps you take an outfit or photo and instantly discover perfectly
+            matched color palettes. Save your favorites, build vision boards, and explore
+            ideas for outfits, mood boards, or brand vibes—without guessing.
+          </p>
+          <div class="hero-cta">
+            <a class="btn-primary" href="upload.html">Start Matching Colors</a>
+            <a class="btn-secondary" href="#previews">See Vision Boards</a>
+          </div>
+          <ul class="hero-points">
+            <li>Extract dominant colors from your photo</li>
+            <li>Get complementary, analogous, contrast & neutral matches</li>
+            <li>Save palettes into boards you can revisit anytime</li>
+          </ul>
+        </div>
+        <div class="hero-right">
+          <!-- Collage Preview -->
+          <div class="collage">
+            <div class="collage-item collage-a"></div>
+            <div class="collage-item collage-b"></div>
+            <div class="collage-item collage-c"></div>
+            <div class="collage-palette">
+              <span style="--sw:#f8e1ee"></span>
+              <span style="--sw:#f36db0"></span>
+              <span style="--sw:#8b5cf6"></span>
+              <span style="--sw:#1f2937"></span>
+              <span style="--sw:#ffffff"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- What we do -->
+      <section class="features">
+        <div class="feature">
+          <div class="feature-icon">🖼️</div>
+          <h3>Upload & Detect</h3>
+          <p>Upload any clothing photo or reference image. We detect the most prominent colors for you.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🎯</div>
+          <h3>Smart Matches</h3>
+          <p>Color-theory powered suggestions (complementary, analogous, triadic, neutral) ready to use.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">📚</div>
+          <h3>Save & Organize</h3>
+          <p>Log in to save palettes into boards—perfect for styling, mood boards, and creative projects.</p>
+        </div>
+      </section>
+
+      <!-- Vision board previews -->
+      <section class="boards" id="previews">
+        <div class="boards-head">
+          <h2>Vision Board Previews</h2>
+          <p>Here are a few quick peeks. Open them to see color stories and styling ideas.</p>
+        </div>
+
+        <div class="boards-grid">
+          <!-- Card 1 -->
+          <article class="board-card">
+            <div class="board-media">
+              <!-- Replace placeholders with your images (e.g., assets/board1.jpg) -->
+              <img src="https://picsum.photos/seed/matchify1/640/420" alt="Minimal streetwear board preview">
+              <div class="mini-palette">
+                <span style="--sw:#111827"></span>
+                <span style="--sw:#6b7280"></span>
+                <span style="--sw:#f3f4f6"></span>
+                <span style="--sw:#fec0e8"></span>
+              </div>
+            </div>
+            <div class="board-body">
+              <h3>Minimal Streetwear</h3>
+              <p>Crisp neutrals with a soft pink pop. Use triadic accents to keep outfits lively but clean.</p>
+              <div class="board-actions">
+                <a href="index.html" class="btn-secondary">Recreate Palette</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="board-card">
+            <div class="board-media">
+              <img src="https://picsum.photos/seed/matchify2/640/420" alt="Cozy autumn board preview">
+              <div class="mini-palette">
+                <span style="--sw:#7c3e0a"></span>
+                <span style="--sw:#f59e0b"></span>
+                <span style="--sw:#dac5a7"></span>
+                <span style="--sw:#2f3e46"></span>
+              </div>
+            </div>
+            <div class="board-body">
+              <h3>Cozy Autumn</h3>
+              <p>Warm analogous browns and ambers balanced with a deep forest neutral—perfect for layers.</p>
+              <div class="board-actions">
+                <a href="index.html" class="btn-secondary">Recreate Palette</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="board-card">
+            <div class="board-media">
+              <img src="https://picsum.photos/seed/matchify3/640/420" alt="Vibrant editorial board preview">
+              <div class="mini-palette">
+                <span style="--sw:#f36db0"></span>
+                <span style="--sw:#8b5cf6"></span>
+                <span style="--sw:#10b981"></span>
+                <span style="--sw:#111827"></span>
+              </div>
+            </div>
+            <div class="board-body">
+              <h3>Vibrant Editorial</h3>
+              <p>High-contrast complements with confident color blocking. Add neutrals to anchor the look.</p>
+              <div class="board-actions">
+                <a href="index.html" class="btn-secondary">Recreate Palette</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>© 2025 Matchify</p>
+    </footer>
+  </div>
 </body>
 </html>
