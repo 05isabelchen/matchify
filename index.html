@@ -20,6 +20,16 @@
             <div class="header-content">
                 <h1>Matchify</h1>
                 <p class="tagline">Find Perfect Color Pairings</p>
+                <!-- Auth Controls -->
+<div class="auth-controls">
+  <span id="userGreeting" class="auth-greeting hidden"></span>
+  <div class="auth-buttons">
+    <button id="loginOpenBtn" class="btn-secondary btn-sm">Log in</button>
+    <button id="signupOpenBtn" class="btn-primary btn-sm">Sign up</button>
+    <button id="logoutBtn" class="btn-secondary btn-sm hidden">Log out</button>
+  </div>
+</div>
+
             </div>
         </header>
 
@@ -62,8 +72,9 @@
 
             <!-- Results Section -->
             <section class="results-section hidden" id="resultsSection">
-                <h2>✨ Matching Colors</h2>
-                
+                <h2>Matching Colors</h2>
+                <button class="btn-primary btn-full" id="saveMatchesBtn">Save These Matches</button>
+
                 <div class="color-theory-section">
                     <h3>Complementary Colors</h3>
                     <p class="theory-description">Colors opposite on the color wheel - creates vibrant contrast</p>
@@ -77,10 +88,11 @@
                 </div>
 
                 <div class="color-theory-section">
-                    <h3>Triadic Colors</h3>
-                    <p class="theory-description">Three evenly spaced colors - balanced and vibrant</p>
-                    <div class="color-grid" id="triadicColors"></div>
-                </div>
+                   <h3>Contrasting Colors</h3>
+                   <p class="theory-description">High-contrast (split-complementary) picks for bold pairings</p>
+                   <div class="color-grid" id="contrastingColors"></div>
+               </div>
+
 
                 <div class="color-theory-section">
                     <h3>Neutral Pairings</h3>
@@ -89,14 +101,44 @@
                 </div>
 
                 <button class="btn-secondary btn-full" id="newSearchBtn">Upload Another Item</button>
+            <section class="results-section hidden" id="savedSection">
+  <h2>Saved Palettes</h2>
+  <div id="savedGrid" class="saved-grid"></div>
+</section>
+
             </section>
         </main>
 
         <!-- Footer -->
         <footer class="app-footer">
-            <p>© 2025 Matchify</p>
+            <p>Matchify</p>
         </footer>
     </div>
+    <!-- Auth Modal -->
+<div id="authModal" class="modal hidden">
+  <div class="modal-content">
+    <h3 id="authTitle">Log in</h3>
+    <form id="authForm">
+      <label class="modal-label">
+        Username
+        <input id="authUsername" type="text" class="modal-input" autocomplete="username" required>
+      </label>
+      <label class="modal-label">
+        Password
+        <input id="authPassword" type="password" class="modal-input" autocomplete="current-password" required>
+      </label>
+      <div class="modal-actions">
+        <button type="submit" class="btn-primary">Continue</button>
+        <button type="button" id="authCancelBtn" class="btn-secondary">Cancel</button>
+      </div>
+      <p class="modal-switch">
+        <span id="authSwitchText">Don't have an account?</span>
+        <button type="button" id="authSwitchBtn" class="linklike">Sign up</button>
+      </p>
+    </form>
+  </div>
+</div>
+<div id="modalOverlay" class="modal-overlay hidden"></div>
 
     <script src="script.js"></script>
 </body>
