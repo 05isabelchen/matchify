@@ -5,6 +5,8 @@ const state = {
    matchingColors: {}
 };
 
+
+
 state.currentUser = null;
 
 const loginOpenBtn = document.getElementById('loginOpenBtn');
@@ -39,6 +41,19 @@ const clearBtn = document.getElementById('clearBtn');
 const analyzeBtn = document.getElementById('analyzeBtn');
 const newSearchBtn = document.getElementById('newSearchBtn');
 const colorChips = document.getElementById('colorChips');
+
+let addImgBtn = document.getElementById('addImageToBoard');
+if (!addImgBtn && previewSection) {
+  addImgBtn = document.createElement('button');
+  addImgBtn.id = 'addImageToBoard';
+  addImgBtn.className = 'btn-secondary';
+  addImgBtn.textContent = 'Add Image to Vision Board';
+  addImgBtn.style.marginTop = '8px';
+  previewSection.appendChild(addImgBtn);
+}
+addImgBtn?.addEventListener('click', () => {
+  if (state.uploadedImage) addImageToBoard(state.uploadedImage, 'Source image');
+});
 
 
 // Event Listeners
@@ -84,6 +99,9 @@ function displayPreview() {
    };
 }
 
+  document.getElementById('addImageToBoard')?.addEventListener('click', () => {
+  if (state.uploadedImage) addImageToBoard(state.uploadedImage, 'Source image');
+});
 
 // Extract dominant colors from image
 function extractDominantColors() {
@@ -286,15 +304,58 @@ function displayColorGrid(containerId, colors) {
        const card = document.createElement('div');
        card.className = 'color-card';
        card.innerHTML = `
-           <div class="color-swatch" style="background-color: ${hex};"></div>
-           <div class="color-name">${colorName}</div>
-           <div class="color-hex">${hex}</div>
-       `;
+  <div class="color-swatch" style="background-color:${hex};"></div>
+  <div class="color-name">${colorName}</div>
+  <div class="color-hex">${hex}</div>
+`;
+const addBtn = document.createElement('button');
+addBtn.textContent = 'Add to Vision Board';
+addBtn.className = 'btn-secondary add-to-board';
+addBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  addColorToBoard(hex, `${colorName} from ${containerId}`);
+});
+card.appendChild(addBtn);
       
        card.addEventListener('click', () => {
            copyToClipboard(hex);
        });
+
+          // Save a pin to localStorage for the Vision Board page
+  function savePinToBoard(pin) {
+    const LS_KEY = 'matchify_board_v1';
+      let pins = [];
+      try {
+          pins = JSON.parse(localStorage.getItem(LS_KEY)) || [];
+      } catch (e) {
+          pins = [];
+      }
+
+      // Minimal shape: { hex, name, image, note, createdAt }
+      pins.unshift({
+          hex: pin.hex || null,
+          name: pin.name || '',
+          image: pin.image || null,   // current uploaded image (dataURL)
+          note: pin.note || '',
+          createdAt: Date.now()
+      });
+
+      localStorage.setItem(LS_KEY, JSON.stringify(pins));
+      showToast('Saved to Vision Board!');
+    }
+
       
+       // --- ADD: Save to Vision Board button
+        const saveBtn = document.createElement('button');
+        saveBtn.textContent = 'Save to Board';
+        saveBtn.className = 'btn-secondary';
+        saveBtn.style.marginTop = '8px';
+        saveBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // prevent copy handler
+        savePinToBoard({ hex, name: colorName, image: state.uploadedImage, note: '' });
+});
+      card.appendChild(saveBtn);
+
        container.appendChild(card);
    });
 }
@@ -449,9 +510,33 @@ function hsvToRgb(h, s, v) {
    };
 }
 
+// --- Vision Board storage (shared with vision.html) ---
+const BOARD_KEY = 'matchify_board_v1';
+
+function loadBoard() {
+  try { return JSON.parse(localStorage.getItem(BOARD_KEY)) || []; }
+  catch { return []; }
+}
+function saveBoard(pins) {
+  localStorage.setItem(BOARD_KEY, JSON.stringify(pins));
+}
+function addColorToBoard(hex, note = '') {
+  const pins = loadBoard();
+  pins.unshift({ hex, note });
+  saveBoard(pins);
+  showToast('Added to Vision Board');
+}
+function addImageToBoard(dataUrl, note = '') {
+  const pins = loadBoard();
+  pins.unshift({ image: dataUrl, note });
+  saveBoard(pins);
+  showToast('Image added to Vision Board');
+}
+
 // --- Simple account storage (localStorage) ---
 const ACCOUNTS_KEY = 'matchify_accounts';
 const CURRENT_USER_KEY = 'matchify_current_user';
+
 
 function loadAccounts() {
   try { return JSON.parse(localStorage.getItem(ACCOUNTS_KEY)) || {}; }
