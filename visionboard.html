@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#6366f1">
+    <title>Matchify | Vision Boards</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Allerta+Stencil&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1>Matchify</h1>
+                <p class="tagline">Vision Boards</p>
+                <div class="auth-controls">
+                    <span id="userGreeting" class="auth-greeting hidden"></span>
+                    <div class="auth-buttons">
+                        <button id="loginOpenBtn" class="btn-primary btn-sm">Log in</button>
+                        <button id="signupOpenBtn" class="btn-secondary btn-sm">Sign up</button>
+                        <button id="logoutBtn" class="btn-secondary btn-sm hidden">Log out</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Boards List View -->
+        <main id="boardsListView" class="boards-container">
+            <div class="boards-header">
+                <h1>My Vision Boards</h1>
+                <button class="create-board-btn" id="createBoardBtn">+ Create New Board</button>
+            </div>
+
+            <div class="boards-grid" id="boardsGrid">
+                <!-- Board cards will be inserted here -->
+            </div>
+        </main>
+
+        <!-- Board Detail View -->
+        <main id="boardDetailView" class="board-detail">
+            <div class="board-toolbar">
+                <button class="back-btn" id="backToBoards">← Back to Boards</button>
+                <button class="upload-to-board-btn" id="uploadToBoard">+ Add Photo</button>
+                <button class="share-btn board-action-btn" id="editBoardBtn">Edit Board</button>
+                <button class="share-btn board-action-btn" id="shareBoardBtn">Share Board</button>
+                <button class="delete-btn board-action-btn" id="deleteBoardBtn">Delete Board</button>
+            </div>
+
+            <div class="board-detail-header">
+                <h1 class="board-detail-title" id="boardTitle"></h1>
+                <p class="board-detail-description" id="boardDescription"></p>
+            </div>
+
+            <div class="board-sidebar">
+    <div class="palette-section">
+        <h3>Board Color Palette</h3>
+        <div id="boardPalette" class="board-palette"></div>
+    </div>
+    
+    <div class="suggestions-section">
+        <h3>Suggested Colors</h3>
+        <div class="suggestion-category">
+            <h4>Complementary</h4>
+            <div id="complementaryPalette" class="suggestion-palette"></div>
+        </div>
+        <div class="suggestion-category">
+            <h4>Analogous</h4>
+            <div id="analogousPalette" class="suggestion-palette"></div>
+        </div>
+        <div class="suggestion-category">
+            <h4>Neutral Matches</h4>
+            <div id="neutralPalette" class="suggestion-palette"></div>
+        </div>
+    </div>
+</div>
+
+            <div class="board-images-grid" id="boardImagesGrid">
+            </div>
+
+            <div class="empty-board hidden" id="emptyBoard">
+                <div class="empty-board-icon">📸</div>
+                <h3>No photos yet</h3>
+                <p>Start building your vision board by adding photos</p>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>© 2025 Matchify</p>
+        </footer>
+    </div>
+
+    <!-- Create/Edit Board Modal -->
+    <div id="boardModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="boardModalTitle">Create New Board</h2>
+                <button class="close-modal" id="closeBoardModal">×</button>
+            </div>
+            <form id="boardForm">
+                <div class="form-group">
+                    <label class="form-label" for="boardName">Board Name</label>
+                    <input type="text" id="boardName" class="form-input" placeholder="e.g., Summer Outfits" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="boardDescription">Description (optional)</label>
+                    <textarea id="boardDescription" class="form-input form-textarea" placeholder="What's this board about?"></textarea>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%;">Create Board</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div id="shareModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Share Board</h2>
+                <button class="close-modal" id="closeShareModal">×</button>
+            </div>
+            <p>Share this link with others to show them your vision board:</p>
+            <div class="share-link-container">
+                <input type="text" id="shareLinkInput" class="share-link-input" readonly>
+                <button class="copy-link-btn" id="copyLinkBtn">Copy</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Photo Modal -->
+    <div id="uploadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Photo to Board</h2>
+                <button class="close-modal" id="closeUploadModal">×</button>
+            </div>
+            <input type="file" id="photoInput" accept="image/*" style="display: none;">
+            <div style="text-align: center; padding: 2rem;">
+                <button class="upload-to-board-btn" id="selectPhotoBtn">Choose Photo</button>
+                <p style="margin-top: 1rem; color: #666;">or drag and drop</p>
+            </div>
+            <div id="photoPreviewContainer" style="display: none; margin-top: 1rem;">
+                <img id="photoPreview" style="max-width: 100%; border-radius: 8px;">
+                <button class="btn-primary" id="savePhotoBtn" style="width: 100%; margin-top: 1rem;">Add to Board</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Board Modal -->
+<div id="editBoardModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Edit Board</h2>
+            <button class="close-modal" id="closeEditBoardModal">×</button>
+        </div>
+        <form id="editBoardForm">
+            <div class="form-group">
+                <label class="form-label" for="editBoardName">Board Name</label>
+                <input type="text" id="editBoardName" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="editBoardDescription">Description (optional)</label>
+                <textarea id="editBoardDescription" class="form-input form-textarea"></textarea>
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%;">Save Changes</button>
+        </form>
+        
+        <hr style="margin: 2rem 0; border: none; border-top: 1px solid #eee;">
+        
+        <h3 style="margin-bottom: 1rem;">Rearrange Photos</h3>
+        <p style="color: #666; margin-bottom: 1rem; font-size: 0.875rem;">Drag and drop to reorder</p>
+        <div id="editImagesGrid" class="edit-images-grid"></div>
+    </div>
+</div>
+
+    <script src="saveandload.js"></script>
+</body>
+</html>
